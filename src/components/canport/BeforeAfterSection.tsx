@@ -5,14 +5,14 @@ import { Sparkles, ArrowRight, Check, X } from 'lucide-react';
 
 export const BeforeAfterSection: React.FC = () => {
   return (
-    <section id="avant-apres" className="py-20 md:py-28 bg-[#FDFBF7] border-t border-[#EAE3D8] scroll-mt-20">
+    <section id="avant-apres" className="py-14 sm:py-20 md:py-28 bg-[#FDFBF7] border-t border-[#EAE3D8] scroll-mt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="text-center max-w-2xl mx-auto mb-14 sm:mb-16"
+          className="text-center max-w-2xl mx-auto mb-9 sm:mb-16"
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#E7E0D5] text-xs font-semibold uppercase tracking-wider text-[#7A583E] mb-3 shadow-2xs">
             <Sparkles className="w-3.5 h-3.5 text-[#A87C51]" />
@@ -35,7 +35,7 @@ export const BeforeAfterSection: React.FC = () => {
               viewport={{ once: true, margin: '-30px' }}
               transition={{ duration: 0.4, delay: idx * 0.08 }}
               whileHover={{ scale: 1.01, y: -2 }}
-              className="grid grid-cols-1 md:grid-cols-11 gap-3 p-4 sm:p-5 rounded-3xl bg-[#FAF7F2] border border-[#E8E1D5] hover:border-[#D5C7B7] hover:bg-white items-center shadow-2xs hover:shadow-xl transition-all duration-300"
+              className="grid grid-cols-1 md:grid-cols-11 gap-2.5 p-3 sm:p-5 rounded-2xl sm:rounded-3xl bg-[#FAF7F2] border border-[#E8E1D5] hover:border-[#D5C7B7] hover:bg-white items-center shadow-2xs hover:shadow-xl transition-all duration-300"
             >
               {/* Before */}
               <div className="md:col-span-5 flex items-start gap-3 p-3.5 rounded-2xl bg-white/80 border border-amber-200/70 shadow-2xs">

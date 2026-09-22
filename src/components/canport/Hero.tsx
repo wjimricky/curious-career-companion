@@ -11,7 +11,7 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onOpenSchedule }) => {
   return (
-    <section id="accueil" className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-gradient-to-b from-[#F7F3EB] via-[#FDFBF7] to-[#FDFBF7] scroll-mt-24">
+    <section id="accueil" className="relative overflow-hidden bg-gradient-to-b from-[#F7F3EB] via-[#FDFBF7] to-[#FDFBF7] pb-14 pt-28 scroll-mt-24 sm:pb-20 sm:pt-32 md:pt-40 md:pb-28">
       {/* Decorative ambient background glows */}
       <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[650px] h-[350px] bg-gradient-to-r from-[#EBDBC8]/40 via-[#DFCBB5]/30 to-transparent rounded-full blur-[110px] pointer-events-none" />
       <div className="absolute top-40 right-10 w-[300px] h-[300px] bg-[#E8DCB8]/30 rounded-full blur-[90px] pointer-events-none" />
@@ -23,7 +23,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onOpenSchedule }) => 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: DURATION.base, ease: EASE_OUT }}
-            className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#FAF7F2] border border-[#E2DAD0] shadow-[0_2px_8px_rgba(62,50,40,0.03)] text-xs text-[#5C4D3E] font-medium mb-6 max-w-full"
+            className="inline-flex max-w-full flex-wrap items-center justify-center gap-1.5 rounded-xl border border-[#E2DAD0] bg-[#FAF7F2] px-3 py-2 text-[11px] font-medium text-[#5C4D3E] shadow-[0_2px_8px_rgba(62,50,40,0.03)] sm:mb-6 sm:gap-2.5 sm:rounded-full sm:px-4 sm:py-1.5 sm:text-xs"
           >
             <div className="w-5 h-5 rounded-full bg-[#2D241E] text-[#FDFBF7] text-[10px] font-bold flex items-center justify-center shrink-0">
               CR
@@ -42,7 +42,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onOpenSchedule }) => 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.06, duration: DURATION.slow, ease: EASE_OUT }}
-            className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-[#2D241E] leading-[1.14] break-words"
+            className="mt-5 text-[2rem] sm:mt-0 sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-[#2D241E] leading-[1.14] break-words"
           >
             Vous créez, vendez, coachez.{' '}
             <span className="block mt-1 sm:mt-2 text-transparent bg-clip-text bg-gradient-to-r from-[#7A583E] via-[#9B7352] to-[#B58A63]">
@@ -72,7 +72,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onOpenSchedule }) => 
               id="hero-primary-cta"
               type="button"
               onClick={() => onOpenBooking?.('Diagnostic Personnalisé (20 min offertes)')}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-2.5 px-5 sm:px-7 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-semibold text-[#FDFBF7] bg-[#2D241E] hover:bg-[#3E3228] shadow-lg shadow-[#2D241E]/20 hover:shadow-xl hover:shadow-[#2D241E]/25 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer text-center"
+              className="w-full sm:w-auto inline-flex min-h-12 items-center justify-center gap-2 sm:gap-2.5 px-4 sm:px-7 py-3 sm:py-3.5 rounded-2xl sm:rounded-full text-xs sm:text-sm font-semibold text-[#FDFBF7] bg-[#2D241E] hover:bg-[#3E3228] shadow-lg shadow-[#2D241E]/20 hover:shadow-xl hover:shadow-[#2D241E]/25 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer text-center"
             >
               <Calendar className="w-4 h-4 text-[#E0A97E] shrink-0" />
               <span>Réserver mon échange 20 min • Diagnostic gratuit</span>
@@ -94,7 +94,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onOpenSchedule }) => 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: DURATION.slow, ease: EASE_OUT }}
-            className="mt-12 pt-8 border-t border-[#E8E1D5] grid grid-cols-1 sm:grid-cols-3 gap-4 text-left"
+            className="mt-9 grid grid-cols-1 gap-3 border-t border-[#E8E1D5] pt-6 text-left sm:mt-12 sm:grid-cols-3 sm:gap-4 sm:pt-8"
           >
             <div className="flex items-start gap-3 p-4 rounded-xl bg-[#FAF7F2] border border-[#E7E0D5] shadow-[0_2px_8px_rgba(62,50,40,0.02)]">
               <div className="w-8 h-8 rounded-lg bg-[#EFE8DC] text-[#7A583E] flex items-center justify-center shrink-0">

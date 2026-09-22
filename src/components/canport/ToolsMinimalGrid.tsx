@@ -185,10 +185,10 @@ const secondaryTools = [
 
 export const ToolsMinimalGrid: React.FC = () => {
   return (
-    <section id="outils" className="py-16 md:py-24 bg-[#FDFBF7] border-t border-[#EAE3D8]">
+    <section id="outils" className="py-14 sm:py-16 md:py-24 bg-[#FDFBF7] border-t border-[#EAE3D8]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#E7E0D5] text-xs font-semibold uppercase tracking-wider text-[#7A583E] mb-3 shadow-2xs">
             <Wrench className="w-3.5 h-3.5 text-[#A87C51]" />
             <span>Environnement & Outils</span>
@@ -202,11 +202,11 @@ export const ToolsMinimalGrid: React.FC = () => {
         </div>
 
         {/* 12 Tools Grid (3 columns on mobile, 4/6 on larger screens) */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 sm:gap-4 max-w-2xl md:max-w-3xl mx-auto">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 sm:gap-4 max-w-2xl md:max-w-3xl mx-auto">
           {mainTools.map((tool) => (
             <div
               key={tool.id}
-              className="aspect-square rounded-2xl sm:rounded-3xl bg-white border border-[#ECE5DB] shadow-2xs hover:shadow-md hover:border-[#D5C7B7] hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center p-3 sm:p-4 group cursor-default"
+              className="aspect-square min-w-0 rounded-xl sm:rounded-3xl bg-white border border-[#ECE5DB] shadow-2xs hover:shadow-md hover:border-[#D5C7B7] hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center p-2 sm:p-4 group cursor-default overflow-hidden"
               title={tool.name}
             >
               <div className="transition-transform duration-200 group-hover:scale-105 flex items-center justify-center">
