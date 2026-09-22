@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Calendar, CheckCircle2, Clock, ShieldCheck, ArrowRight, User, Mail, MessageSquare, ExternalLink, Sparkles } from 'lucide-react';
 import { portfolioProfile, servicePlans, getCalendlyUrl } from '../data/portfolioData';
+import { useScrollLock } from '../hooks/use-scroll-lock';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -34,6 +35,7 @@ const SCHEDULE_OPTIONS = [
 ];
 
 export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, initialPlan }) => {
+  useScrollLock(isOpen);
   const [selectedPlan, setSelectedPlan] = useState<string>(initialPlan || 'Organisation Administrative');
   const [selectedDay, setSelectedDay] = useState(0);
   const [selectedSlot, setSelectedSlot] = useState(SCHEDULE_OPTIONS[0].slots[1]);
@@ -71,7 +73,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-end justify-center overflow-hidden sm:items-center sm:p-6">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -87,21 +89,24 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
             transition={{ type: 'spring', damping: 28, stiffness: 350 }}
-            className="relative w-full max-w-xl bg-[#FAF8F5] rounded-3xl border border-[#E7DFD5] shadow-2xl p-6 sm:p-8 z-10 my-auto text-[#2D241E]"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Réserver un appel"
+            className="relative z-10 max-h-[100dvh] w-full overflow-y-auto overscroll-contain rounded-t-2xl border border-[#E7DFD5] bg-[#FAF8F5] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] text-[#2D241E] shadow-2xl sm:my-auto sm:max-h-[92vh] sm:max-w-xl sm:rounded-3xl sm:p-8"
           >
             {/* Close button */}
             <button
               id="close-booking-modal-btn"
               onClick={onClose}
-              className="absolute top-5 right-5 p-2 rounded-full text-[#7A6C5E] hover:text-[#2C2723] hover:bg-[#EFE9E0] transition-colors cursor-pointer"
+              className="sticky top-0 z-20 float-right grid h-10 w-10 place-items-center rounded-full bg-[#FAF8F5]/95 text-[#7A6C5E] shadow-sm backdrop-blur-sm hover:text-[#2C2723] hover:bg-[#EFE9E0] transition-colors cursor-pointer sm:absolute sm:top-5 sm:right-5"
               aria-label="Fermer la fenêtre"
             >
               <X className="w-5 h-5" />
             </button>
 
             {step === 'slot' && (
-              <div>
-                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#7A583E] mb-2">
+              <div className="clear-both sm:clear-none">
+                <div className="flex items-start gap-2 pr-1 text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-[#7A583E] mb-2">
                   <span className="w-2 h-2 rounded-full bg-[#A87C51]" />
                   <span>Échange découverte • 20 minutes offertes</span>
                 </div>
@@ -154,11 +159,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
 
                 {/* Day selector */}
                 <div className="mt-4">
-                  <div className="flex items-center justify-between mb-2">
+                  <div className="grid grid-cols-1 gap-2 sm:flex sm:items-center sm:justify-between mb-2">
                     <label className="text-xs font-bold text-[#473B30] uppercase tracking-wider block">
                       2. Choisissez le jour (Mar, Mer, Jeu)
                     </label>
-                    <span className="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                    <span className="w-fit text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                       East Africa Time
                     </span>
                   </div>
@@ -212,7 +217,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
                 </div>
 
                 {/* Guarantees */}
-                <div className="mt-5 p-3 rounded-xl bg-[#F0EAE0]/70 border border-[#E4D9CC] flex items-center justify-between text-[11px] text-[#635345]">
+                <div className="mt-5 p-3 rounded-xl bg-[#F0EAE0]/70 border border-[#E4D9CC] grid grid-cols-1 gap-2 sm:flex sm:items-center sm:justify-between text-[11px] text-[#635345]">
                   <div className="flex items-center gap-1.5 font-medium">
                     <Clock className="w-3.5 h-3.5 text-[#7A583E]" />
                     <span>20 min chrono</span>
@@ -229,7 +234,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
                     href={getCalendlyUrl(selectedPlan)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-[#7A583E] hover:underline font-semibold inline-flex items-center gap-1.5"
+                    className="max-w-full text-center text-xs text-[#7A583E] hover:underline font-semibold inline-flex items-center justify-center gap-1.5 break-words"
                   >
                     <span>Ouvrir sur Calendly ({selectedPlan})</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -336,7 +341,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
                   >
                     ← Retour
                   </button>
-                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                <div className="grid w-full grid-cols-1 gap-2 sm:flex sm:w-auto sm:items-center">
                     <a
                       href={calendlyDirectUrl}
                       target="_blank"

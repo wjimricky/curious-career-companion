@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Calendar, Clock, CheckCircle2, Globe2, Sparkles, ExternalLink, ArrowRight } from 'lucide-react';
 import { portfolioProfile, candyaSchedule, getCalendlyUrl } from '../../data/portfolioData';
+import { useScrollLock } from '../../hooks/use-scroll-lock';
 
 interface ScheduleModalProps {
   isOpen: boolean;
@@ -10,10 +11,11 @@ interface ScheduleModalProps {
 }
 
 export const ScheduleModal: React.FC<ScheduleModalProps> = ({ isOpen, onClose, onOpenBooking }) => {
+  useScrollLock(isOpen);
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-end justify-center overflow-hidden sm:items-center sm:p-6">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -29,7 +31,10 @@ export const ScheduleModal: React.FC<ScheduleModalProps> = ({ isOpen, onClose, o
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ type: 'spring', damping: 26, stiffness: 340 }}
-            className="relative w-full max-w-lg bg-[#FAF8F5] rounded-3xl border border-[#E7DFD5] shadow-2xl p-6 sm:p-8 z-10 my-auto text-[#2D241E] overflow-hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Disponibilités et horaires"
+            className="relative z-10 max-h-[100dvh] w-full overflow-y-auto overscroll-contain rounded-t-2xl border border-[#E7DFD5] bg-[#FAF8F5] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] text-[#2D241E] shadow-2xl sm:my-auto sm:max-h-[92vh] sm:max-w-lg sm:rounded-3xl sm:p-8"
           >
             {/* Ambient subtle glow */}
             <div className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-emerald-200/30 blur-2xl pointer-events-none" />
@@ -39,15 +44,15 @@ export const ScheduleModal: React.FC<ScheduleModalProps> = ({ isOpen, onClose, o
               id="close-schedule-modal-btn"
               type="button"
               onClick={onClose}
-              className="absolute top-5 right-5 p-2 rounded-full text-[#7A6C5E] hover:text-[#2C2723] hover:bg-[#EFE9E0] transition-colors cursor-pointer"
+              className="sticky top-0 z-20 float-right grid h-10 w-10 place-items-center rounded-full bg-[#FAF8F5]/95 text-[#7A6C5E] shadow-sm backdrop-blur-sm hover:text-[#2C2723] hover:bg-[#EFE9E0] transition-colors cursor-pointer sm:absolute sm:top-5 sm:right-5"
               aria-label="Fermer"
             >
               <X className="w-5 h-5" />
             </button>
 
             {/* Header with active green pulse */}
-            <div className="flex items-center gap-2 mb-3">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/80 border border-emerald-300/80 text-emerald-800 text-xs font-bold shadow-2xs">
+            <div className="clear-both flex items-start gap-2 pr-1 mb-3 sm:clear-none sm:pr-10">
+              <span className="inline-flex max-w-full items-start gap-1.5 px-3 py-1 rounded-xl sm:rounded-full bg-emerald-100/80 border border-emerald-300/80 text-emerald-800 text-[11px] sm:text-xs font-bold shadow-2xs">
                 <span className="relative flex h-2.5 w-2.5 shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.9)]"></span>
@@ -64,12 +69,12 @@ export const ScheduleModal: React.FC<ScheduleModalProps> = ({ isOpen, onClose, o
             </p>
 
             {/* Timezone badge */}
-            <div className="mt-4 p-3 rounded-2xl bg-white border border-[#E8DFC8] flex items-center justify-between text-xs text-[#5C4D3E]">
+            <div className="mt-4 p-3 rounded-2xl bg-white border border-[#E8DFC8] grid grid-cols-1 gap-2 sm:flex sm:items-center sm:justify-between text-xs text-[#5C4D3E]">
               <div className="flex items-center gap-2">
                 <Globe2 className="w-4 h-4 text-[#8F6544]" />
                 <span className="font-semibold">Fuseau horaire :</span>
               </div>
-              <span className="font-bold text-[#2D241E] bg-[#FAF4EB] px-2.5 py-0.5 rounded-full border border-[#E8DFC8]">
+              <span className="w-fit font-bold text-[#2D241E] bg-[#FAF4EB] px-2.5 py-0.5 rounded-full border border-[#E8DFC8]">
                 {candyaSchedule.timezone} ({candyaSchedule.timezoneOffset})
               </span>
             </div>
@@ -79,13 +84,13 @@ export const ScheduleModal: React.FC<ScheduleModalProps> = ({ isOpen, onClose, o
               {candyaSchedule.activeDays.map((item) => (
                 <div
                   key={item.day}
-                  className="p-3.5 rounded-2xl bg-white border border-[#E8DFC8] hover:border-[#C4B3A1] shadow-2xs flex items-center justify-between transition-colors"
+                  className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 p-3 rounded-2xl bg-white border border-[#E8DFC8] hover:border-[#C4B3A1] shadow-2xs transition-colors sm:p-3.5"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center font-bold text-xs shrink-0">
                       <Clock className="w-4 h-4" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <span className="text-sm font-bold text-[#2D241E] block">
                         {item.day}
                       </span>
@@ -94,7 +99,7 @@ export const ScheduleModal: React.FC<ScheduleModalProps> = ({ isOpen, onClose, o
                       </span>
                     </div>
                   </div>
-                  <div className="text-right">
+                  <div className="shrink-0 text-right">
                     <span className="text-xs font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
                       {item.hours}
                     </span>
