@@ -38,7 +38,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
 
   const currentProject = projectsData.find((p) => p.id === activeProjectId) || projectsData[0];
   if (!currentProject) return null;
-  const activeViewId = activeViewByProject[currentProject.id] || currentProject.screenshots[0].id;
+  const activeViewId = activeViewByProject[currentProject.id] ?? currentProject.screenshots[0]?.id ?? '';
   const currentScreenshot = currentProject.screenshots.find((s) => s.id === activeViewId) || currentProject.screenshots[0];
   if (!currentScreenshot) return null;
 
