@@ -163,7 +163,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onOpenBooking }) => {
                 <div className="space-y-2.5 [transform:translateZ(14px)]">
                   {competencies.administrative.map((item, idx) => {
                     const icons = [Mail, Calendar, CheckSquare, Users, CreditCard];
-                    const ItemIcon = icons[idx % icons.length];
+                    const ItemIcon = icons[idx % icons.length] ?? Mail;
                     return (
                       <motion.div
                         key={item.label}
@@ -257,7 +257,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onOpenBooking }) => {
                 <div className="space-y-2.5 [transform:translateZ(14px)]">
                   {competencies.clientSupport.map((item, idx) => {
                     const icons = [MessageSquare, ShieldAlert, KeyRound, Receipt];
-                    const ItemIcon = icons[idx % icons.length];
+                    const ItemIcon = icons[idx % icons.length] ?? MessageSquare;
                     return (
                       <motion.div
                         key={item.label}

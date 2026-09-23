@@ -32,11 +32,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSchedule })
       // Section spy
       const sectionIds = ['accueil', 'a-propos', 'services', 'projets', 'contact'];
       for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sectionIds[i]);
+        const sectionId = sectionIds[i];
+        if (!sectionId) continue;
+        const el = document.getElementById(sectionId);
         if (el) {
           const rect = el.getBoundingClientRect();
           if (rect.top <= 140) {
-            setActiveSection(sectionIds[i]);
+            setActiveSection(sectionId);
             break;
           }
         }

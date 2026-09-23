@@ -21,7 +21,7 @@ interface ProjectsSectionProps {
 }
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking }) => {
-  const [activeProjectId, setActiveProjectId] = useState<string>(projectsData[0].id);
+  const [activeProjectId, setActiveProjectId] = useState<string>(projectsData[0]?.id ?? '');
   const [activeViewByProject, setActiveViewByProject] = useState<Record<string, string>>({
     'suivi-clients': 'sc-1',
     'suivi-taches': 'st-1',
@@ -37,8 +37,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
   useScrollLock(Boolean(zoomedScreenshot));
 
   const currentProject = projectsData.find((p) => p.id === activeProjectId) || projectsData[0];
+  if (!currentProject) return null;
   const activeViewId = activeViewByProject[currentProject.id] || currentProject.screenshots[0].id;
   const currentScreenshot = currentProject.screenshots.find((s) => s.id === activeViewId) || currentProject.screenshots[0];
+  if (!currentScreenshot) return null;
 
   const handleSelectView = (projectId: string, viewId: string) => {
     setActiveViewByProject((prev) => ({
@@ -433,7 +435,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
                       : 'bg-white text-[#4A3F35] border-[#E8DFD3] hover:bg-[#FAF7F2]'
                   }`}
                 >
-                  Vue {idx + 1} : {sc.title.split('—')[0].trim()}
+                  Vue {idx + 1} : {sc.title.split('—')[0]?.trim() ?? sc.title}
                 </button>
               ))}
             </div>
