@@ -96,7 +96,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onOpenBooking }) => {
   return (
     <section
       id="services"
-      className="py-20 md:py-28 bg-[#F7F3EB]/60 border-t border-[#EAE3D8] relative scroll-mt-20 overflow-hidden"
+      className="py-14 sm:py-20 md:py-28 bg-[#F7F3EB]/60 border-t border-[#EAE3D8] relative scroll-mt-20 overflow-hidden"
     >
       {/* Decorative background parallax ambient lights */}
       <div className="absolute top-1/3 -left-32 w-80 h-80 rounded-full bg-[#E8DCB8]/25 blur-[100px] pointer-events-none" />
@@ -112,7 +112,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onOpenBooking }) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="text-center max-w-2xl mx-auto mb-14 sm:mb-16"
+          className="text-center max-w-2xl mx-auto mb-9 sm:mb-16"
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#E7E0D5] text-xs font-semibold uppercase tracking-wider text-[#7A583E] mb-3 shadow-2xs">
             <Sparkles className="w-3.5 h-3.5 text-[#A87C51]" />
@@ -135,19 +135,19 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onOpenBooking }) => {
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
           >
-            <ParallaxCard className="p-6 sm:p-9 h-full flex flex-col justify-between">
+            <ParallaxCard className="p-4 sm:p-9 h-full flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between gap-3 mb-6 [transform:translateZ(26px)]">
-                  <div className="flex items-center gap-3.5">
+                <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2.5 mb-5 sm:mb-6 [transform:translateZ(26px)]">
+                  <div className="flex min-w-0 items-center gap-3">
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: -4 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                      className="w-12 h-12 rounded-2xl bg-[#F4EDE2] text-[#7A583E] flex items-center justify-center shadow-2xs ring-1 ring-[#E8DFC8]"
+                      className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl sm:rounded-2xl bg-[#F4EDE2] text-[#7A583E] flex items-center justify-center shadow-2xs ring-1 ring-[#E8DFC8]"
                     >
                       <CheckSquare className="w-5 h-5 text-[#8F6544]" />
                     </motion.div>
-                    <div>
-                      <h3 className="text-xl font-extrabold text-[#2D241E] tracking-tight">
+                    <div className="min-w-0">
+                      <h3 className="text-base sm:text-xl font-extrabold text-[#2D241E] tracking-tight leading-tight">
                         Organisation Administrative
                       </h3>
                       <p className="text-xs text-[#8A7969] font-medium mt-0.5">
@@ -169,7 +169,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onOpenBooking }) => {
                         key={item.label}
                         whileHover={{ scale: 1.02, x: 5 }}
                         transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-                        className="p-3.5 rounded-2xl bg-[#FAF7F2]/90 border border-[#EBE4D8] hover:border-[#CDBFA7] hover:bg-white flex items-start gap-3.5 transition-colors shadow-2xs cursor-pointer group/item"
+                        className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#FAF7F2]/90 border border-[#EBE4D8] hover:border-[#CDBFA7] hover:bg-white flex items-start gap-3 transition-colors shadow-2xs cursor-pointer group/item"
                         onClick={() => onOpenBooking?.('Organisation Administrative')}
                       >
                         <div className="w-7 h-7 rounded-xl bg-white text-[#7A583E] flex items-center justify-center shrink-0 mt-0.5 shadow-2xs border border-[#EAE3D8] group-hover/item:border-[#CDBFA7] group-hover/item:scale-105 transition-all">
@@ -229,19 +229,19 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onOpenBooking }) => {
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
           >
-            <ParallaxCard className="p-6 sm:p-9 h-full flex flex-col justify-between">
+            <ParallaxCard className="p-4 sm:p-9 h-full flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between gap-3 mb-6 [transform:translateZ(26px)]">
-                  <div className="flex items-center gap-3.5">
+                <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2.5 mb-5 sm:mb-6 [transform:translateZ(26px)]">
+                  <div className="flex min-w-0 items-center gap-3">
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: 4 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                      className="w-12 h-12 rounded-2xl bg-[#F4EDE2] text-[#7A583E] flex items-center justify-center shadow-2xs ring-1 ring-[#E8DFC8]"
+                      className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl sm:rounded-2xl bg-[#F4EDE2] text-[#7A583E] flex items-center justify-center shadow-2xs ring-1 ring-[#E8DFC8]"
                     >
                       <MessageSquare className="w-5 h-5 text-[#8F6544]" />
                     </motion.div>
-                    <div>
-                      <h3 className="text-xl font-extrabold text-[#2D241E] tracking-tight">
+                    <div className="min-w-0">
+                      <h3 className="text-base sm:text-xl font-extrabold text-[#2D241E] tracking-tight leading-tight">
                         Support Client Écrit
                       </h3>
                       <p className="text-xs text-[#8A7969] font-medium mt-0.5">
@@ -263,7 +263,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onOpenBooking }) => {
                         key={item.label}
                         whileHover={{ scale: 1.02, x: 5 }}
                         transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-                        className="p-3.5 rounded-2xl bg-[#FAF7F2]/90 border border-[#EBE4D8] hover:border-[#CDBFA7] hover:bg-white flex items-start gap-3.5 transition-colors shadow-2xs cursor-pointer group/item"
+                        className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#FAF7F2]/90 border border-[#EBE4D8] hover:border-[#CDBFA7] hover:bg-white flex items-start gap-3 transition-colors shadow-2xs cursor-pointer group/item"
                         onClick={() => onOpenBooking?.('Support Client Écrit')}
                       >
                         <div className="w-7 h-7 rounded-xl bg-white text-[#7A583E] flex items-center justify-center shrink-0 mt-0.5 shadow-2xs border border-[#EAE3D8] group-hover/item:border-[#CDBFA7] group-hover/item:scale-105 transition-all">
