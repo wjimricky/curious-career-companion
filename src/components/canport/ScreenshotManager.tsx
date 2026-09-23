@@ -86,6 +86,7 @@ export const ScreenshotManager: React.FC<ScreenshotManagerProps> = ({ onImagesUp
 
     for (let i = 0; i < count; i++) {
       const file = files[i];
+      if (!file) continue;
       const targetFileName = matchScreenshotFileName(file.name);
       if (targetFileName) {
         await saveScreenshot(targetFileName, file);

@@ -10,14 +10,16 @@ interface BookingModalProps {
   initialPlan?: string;
 }
 
-const SCHEDULE_OPTIONS = [
-  {
+const DEFAULT_SCHEDULE_OPTION = {
     dayKey: 'mardi',
     label: 'Mardi',
     date: 'Mardi 22 Sept.',
     hours: '08:00 - 12:00',
     slots: ['08:30 - 08:50', '09:30 - 09:50', '10:30 - 10:50', '11:15 - 11:35'],
-  },
+};
+
+const SCHEDULE_OPTIONS = [
+  DEFAULT_SCHEDULE_OPTION,
   {
     dayKey: 'mercredi',
     label: 'Mercredi',
@@ -38,7 +40,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
   useScrollLock(isOpen);
   const [selectedPlan, setSelectedPlan] = useState<string>(initialPlan || 'Organisation Administrative');
   const [selectedDay, setSelectedDay] = useState(0);
-  const [selectedSlot, setSelectedSlot] = useState(SCHEDULE_OPTIONS[0].slots[1]);
+  const [selectedSlot, setSelectedSlot] = useState(DEFAULT_SCHEDULE_OPTION.slots[1] ?? DEFAULT_SCHEDULE_OPTION.slots[0] ?? '');
   const [step, setStep] = useState<'slot' | 'info' | 'success'>('slot');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -50,11 +52,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
     }
   }, [initialPlan]);
 
-  const currentDayConfig = SCHEDULE_OPTIONS[selectedDay] || SCHEDULE_OPTIONS[0];
+  const currentDayConfig = SCHEDULE_OPTIONS[selectedDay] ?? DEFAULT_SCHEDULE_OPTION;
 
   useEffect(() => {
     if (currentDayConfig && !currentDayConfig.slots.includes(selectedSlot)) {
-      setSelectedSlot(currentDayConfig.slots[0]);
+      setSelectedSlot(currentDayConfig.slots[0] ?? '');
     }
   }, [selectedDay, currentDayConfig]);
 
@@ -265,7 +267,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="font-bold text-[#2D241E]">🎯 {selectedPlan}</span>
                     <span className="text-[#C2B29F]">•</span>
-                    <span>📅 {SCHEDULE_OPTIONS[selectedDay]?.date || SCHEDULE_OPTIONS[0].date}</span>
+                    <span>📅 {SCHEDULE_OPTIONS[selectedDay]?.date ?? DEFAULT_SCHEDULE_OPTION.date}</span>
                     <span className="text-[#C2B29F]">•</span>
                     <span>⏰ {selectedSlot}</span>
                   </div>
@@ -374,7 +376,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, ini
                 </h3>
                 <p className="text-xs sm:text-sm text-[#635345] max-w-md mx-auto leading-relaxed">
                   Merci {name || 'cher client'} ! Votre appel de découverte est programmé pour le{' '}
-                  <strong className="text-[#2D241E]">{SCHEDULE_OPTIONS[selectedDay]?.date || SCHEDULE_OPTIONS[0].date}</strong> à{' '}
+                  <strong className="text-[#2D241E]">{SCHEDULE_OPTIONS[selectedDay]?.date ?? DEFAULT_SCHEDULE_OPTION.date}</strong> à{' '}
                   <strong className="text-[#2D241E]">{selectedSlot}</strong>.
                 </p>
                 <div className="p-4 rounded-2xl bg-white border border-[#E7DFD5] text-xs text-[#5C4D3E] max-w-sm mx-auto text-left space-y-1.5 shadow-2xs">

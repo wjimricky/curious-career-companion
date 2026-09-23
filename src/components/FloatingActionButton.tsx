@@ -33,13 +33,13 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onOp
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.92 }}
           transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed bottom-6 right-6 z-40"
+          className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom))] right-3 z-40 sm:bottom-6 sm:right-6"
         >
           <button
             id="floating-action-button"
             type="button"
             onClick={() => onOpenBooking('Diagnostic Personnalisé (20 min offertes)')}
-            className="group relative flex items-center gap-3 px-5 py-3 rounded-full bg-[#2D241E] hover:bg-[#3E3228] text-[#FDFBF7] shadow-[0_8px_24px_rgba(45,36,30,0.22)] border border-[#E0A97E]/30 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+            className="group relative flex min-h-12 items-center gap-2 px-3.5 py-2.5 sm:gap-3 sm:px-5 sm:py-3 rounded-full bg-[#2D241E] hover:bg-[#3E3228] text-[#FDFBF7] shadow-[0_8px_24px_rgba(45,36,30,0.22)] border border-[#E0A97E]/30 transition-all hover:scale-105 active:scale-95 cursor-pointer"
             aria-label="Réserver un appel découverte de 20 minutes offert"
           >
             {/* Status dot pulse */}
@@ -56,13 +56,13 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onOp
                   Offert
                 </span>
               </span>
-              <span className="text-[10px] text-[#CBBCA9] font-medium mt-1">
+              <span className="hidden text-[10px] text-[#CBBCA9] font-medium mt-1 sm:block">
                 Diagnostic organisation & support
               </span>
             </div>
 
             {/* Calendar icon */}
-            <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-[#E0A97E] group-hover:translate-x-0.5 transition-transform shrink-0">
+            <div className="hidden w-7 h-7 rounded-full bg-white/10 sm:flex items-center justify-center text-[#E0A97E] group-hover:translate-x-0.5 transition-transform shrink-0">
               <Calendar className="w-3.5 h-3.5" />
             </div>
           </button>

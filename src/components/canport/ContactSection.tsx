@@ -48,9 +48,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenBooking })
   });
 
   return (
-    <section id="contact" className="py-20 md:py-28 bg-[#FDFBF7] border-t border-[#EAE3D8] scroll-mt-20">
+    <section id="contact" className="py-14 sm:py-20 md:py-28 bg-[#FDFBF7] border-t border-[#EAE3D8] scroll-mt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-9 sm:gap-12">
           {/* Left direct contact card */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -69,17 +69,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenBooking })
               Discutons de vos besoins actuels lors d'un appel découverte gratuit de 20 minutes, ou écrivez-moi directement par message.
             </p>
 
-            <div className="p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E8E1D5] space-y-4 shadow-2xs hover:shadow-lg transition-all duration-300">
+            <div className="p-4 sm:p-7 rounded-2xl sm:rounded-3xl bg-[#FAF7F2] border border-[#E8E1D5] space-y-3 sm:space-y-4 shadow-2xs hover:shadow-lg transition-all duration-300">
               <div className="flex items-center gap-3.5 p-2 rounded-2xl hover:bg-white/70 transition-colors">
                 <div className="w-10 h-10 rounded-2xl bg-white border border-[#E8E1D5] flex items-center justify-center text-[#7A583E] shadow-2xs shrink-0">
                   <Calendar className="w-4 h-4 text-[#8F6544]" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <span className="text-xs text-[#8A7969] block">Appel découverte offert (20 min)</span>
                   <button
                     type="button"
                     onClick={() => onOpenBooking?.(selectedPlan)}
-                    className="text-xs sm:text-sm font-bold text-[#2D241E] hover:text-[#7A583E] underline decoration-[#E0A97E] underline-offset-4 active:scale-95 transition-all cursor-pointer text-left"
+                    className="break-words text-xs sm:text-sm font-bold text-[#2D241E] hover:text-[#7A583E] underline decoration-[#E0A97E] underline-offset-4 active:scale-95 transition-all cursor-pointer text-left"
                   >
                     Choisir un créneau sur mon agenda ({selectedPlan})
                   </button>
@@ -90,11 +90,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenBooking })
                 <div className="w-10 h-10 rounded-2xl bg-white border border-[#E8E1D5] flex items-center justify-center text-[#7A583E] shadow-2xs shrink-0">
                   <Mail className="w-4 h-4 text-[#8F6544]" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <span className="text-xs text-[#8A7969] block">Email direct</span>
                   <a
                     href={`mailto:${portfolioProfile.links.email}`}
-                    className="text-xs sm:text-sm font-bold text-[#2D241E] hover:text-[#7A583E] transition-colors"
+                    className="break-all text-xs sm:text-sm font-bold text-[#2D241E] hover:text-[#7A583E] transition-colors"
                   >
                     {portfolioProfile.links.email}
                   </a>
@@ -105,7 +105,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenBooking })
                 <div className="w-10 h-10 rounded-2xl bg-white border border-[#E8E1D5] flex items-center justify-center text-[#7A583E] shadow-2xs shrink-0">
                   <Linkedin className="w-4 h-4 text-[#8F6544]" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <span className="text-xs text-[#8A7969] block">Réseau professionnel</span>
                   <a
                     href={portfolioProfile.links.linkedin}
@@ -128,12 +128,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenBooking })
             transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
             className="lg:col-span-7"
           >
-            <div className="p-7 sm:p-9 rounded-3xl bg-white border border-[#E8E1D5] shadow-xs hover:shadow-xl transition-all duration-300">
-              <div className="flex items-center justify-between gap-3 mb-2">
+            <div className="p-4 sm:p-9 rounded-2xl sm:rounded-3xl bg-white border border-[#E8E1D5] shadow-xs hover:shadow-xl transition-all duration-300">
+              <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2 sm:gap-3 mb-2">
                 <h3 className="text-lg sm:text-xl font-extrabold text-[#2D241E] tracking-tight">
                   Envoyer un message écrit
                 </h3>
-                <span className="text-[11px] font-semibold text-[#8F6544] bg-[#F7F2E8] px-2.5 py-0.5 rounded-full border border-[#E8DFC8]">
+                <span className="max-w-28 text-center text-[10px] sm:text-[11px] font-semibold text-[#8F6544] bg-[#F7F2E8] px-2 py-1 rounded-xl sm:rounded-full border border-[#E8DFC8]">
                   Réponse sous 24h
                 </span>
               </div>
@@ -147,7 +147,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenBooking })
                   initial={{ opacity: 0, scale: 0.94, y: 15 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-[#F7FAF5] via-[#FCFDFB] to-[#F7FAF5] border border-emerald-200/80 text-center relative overflow-hidden shadow-sm"
+                  className="p-4 sm:p-10 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#F7FAF5] via-[#FCFDFB] to-[#F7FAF5] border border-emerald-200/80 text-center relative overflow-hidden shadow-sm"
                 >
                   {/* Calming ambient waves */}
                   <motion.div
@@ -214,17 +214,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenBooking })
                     transition={{ delay: 0.45, duration: 0.5 }}
                     className="mt-6 p-4 rounded-2xl bg-white border border-[#E6DDD0] text-xs text-[#5C4D3E] max-w-md mx-auto text-left space-y-2 shadow-2xs relative z-10"
                   >
-                    <div className="flex items-center justify-between pb-2 border-b border-[#F0EBE2]">
+                    <div className="grid grid-cols-1 gap-1 pb-2 border-b border-[#F0EBE2] sm:flex sm:items-center sm:justify-between">
                       <span className="font-semibold text-[#7A695B]">Formule choisie :</span>
                       <span className="font-bold text-[#2D241E] bg-[#FAF4EB] px-2 py-0.5 rounded-md border border-[#E8DFC8]">
                         {selectedPlan}
                       </span>
                     </div>
-                    <div className="flex items-center justify-between pb-2 border-b border-[#F0EBE2]">
+                    <div className="grid grid-cols-1 gap-1 pb-2 border-b border-[#F0EBE2] sm:flex sm:items-center sm:justify-between">
                       <span className="font-semibold text-[#7A695B]">Email de contact :</span>
-                      <span className="font-medium text-[#2D241E]">{formData.email}</span>
+                       <span className="break-all font-medium text-[#2D241E]">{formData.email}</span>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="grid grid-cols-1 gap-1 sm:flex sm:items-center sm:justify-between">
                       <span className="font-semibold text-[#7A695B]">Engagement de réponse :</span>
                       <span className="font-bold text-emerald-700 flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5" />
@@ -367,11 +367,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenBooking })
                   </div>
 
                   <div>
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="grid grid-cols-1 gap-1 mb-1 sm:flex sm:items-center sm:justify-between">
                       <label className="text-xs font-bold text-[#3E3228] block">
                         Ce qui vous pèse aujourd'hui <span className="text-red-500">*</span>
                       </label>
-                      <span className="text-[11px] text-[#8A7969] font-medium">
+                      <span className="text-[10px] sm:text-[11px] text-[#8A7969] font-medium">
                         Éditeur enrichi & redimensionnable
                       </span>
                     </div>

@@ -14,13 +14,14 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ProjectScreenMockup } from './ProjectScreenMockup';
+import { useScrollLock } from '../../hooks/use-scroll-lock';
 
 interface ProjectsSectionProps {
   onOpenBooking?: (plan?: string) => void;
 }
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking }) => {
-  const [activeProjectId, setActiveProjectId] = useState<string>(projectsData[0].id);
+  const [activeProjectId, setActiveProjectId] = useState<string>(projectsData[0]?.id ?? '');
   const [activeViewByProject, setActiveViewByProject] = useState<Record<string, string>>({
     'suivi-clients': 'sc-1',
     'suivi-taches': 'st-1',
@@ -33,10 +34,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
     project: Project;
     screenshot: Screenshot;
   } | null>(null);
+  useScrollLock(Boolean(zoomedScreenshot));
 
   const currentProject = projectsData.find((p) => p.id === activeProjectId) || projectsData[0];
-  const activeViewId = activeViewByProject[currentProject.id] || currentProject.screenshots[0].id;
+  if (!currentProject) return null;
+  const activeViewId = activeViewByProject[currentProject.id] ?? currentProject.screenshots[0]?.id ?? '';
   const currentScreenshot = currentProject.screenshots.find((s) => s.id === activeViewId) || currentProject.screenshots[0];
+  if (!currentScreenshot) return null;
 
   const handleSelectView = (projectId: string, viewId: string) => {
     setActiveViewByProject((prev) => ({
@@ -46,10 +50,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
   };
 
   return (
-    <section id="projets" className="py-20 md:py-28 bg-[#F7F3EB]/70 border-t border-[#EAE3D8] scroll-mt-20">
+    <section id="projets" className="py-14 sm:py-20 md:py-28 bg-[#F7F3EB]/70 border-t border-[#EAE3D8] scroll-mt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-9 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#E7E0D5] text-xs font-semibold uppercase tracking-wider text-[#7A583E] mb-3 shadow-2xs">
             <Sparkles className="w-3.5 h-3.5 text-[#A87C51]" />
             <span>Exemples de mon travail & Réalisations</span>
@@ -63,7 +67,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
         </div>
 
         {/* Project Selector Tabs */}
-        <div className="flex items-center justify-start sm:justify-center overflow-x-auto pb-4 mb-10 gap-2.5 sm:gap-3 scrollbar-none">
+        <div className="-mx-4 flex snap-x items-center justify-start overflow-x-auto px-4 pb-4 mb-7 sm:mx-0 sm:justify-center sm:px-0 sm:mb-10 gap-2.5 sm:gap-3 scrollbar-none">
           {projectsData.map((project) => {
             const isSelected = project.id === activeProjectId;
             return (
@@ -71,7 +75,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
                 key={project.id}
                 type="button"
                 onClick={() => setActiveProjectId(project.id)}
-                className={`flex items-center gap-2 px-4 sm:px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap cursor-pointer shrink-0 border ${
+                className={`flex snap-start items-center gap-2 px-4 sm:px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap cursor-pointer shrink-0 border ${
                   isSelected
                     ? 'bg-[#2D241E] text-[#FDFBF7] border-[#2D241E] shadow-md scale-[1.02]'
                     : 'bg-white/90 text-[#5C4D3E] border-[#E8E1D5] hover:bg-white hover:border-[#D5C7B7]'
@@ -89,11 +93,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
         </div>
 
         {/* Featured Project Showcase Container */}
-        <div className="bg-white rounded-3xl border border-[#E7E0D5] shadow-lg shadow-[#2D241E]/5 overflow-hidden transition-all">
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#E7E0D5] shadow-lg shadow-[#2D241E]/5 overflow-hidden transition-all">
           {/* Top Bar of Project Card */}
-          <div className="p-6 sm:p-8 border-b border-[#EAE3D8] bg-[#FAF8F5]/80 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2 mb-1.5">
+          <div className="p-4 sm:p-8 border-b border-[#EAE3D8] bg-[#FAF8F5]/80 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2 mb-1.5">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#A87C51]">
                   Cas n°{currentProject.number} • {currentProject.tools[0]}
                 </span>
@@ -111,11 +115,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
             </div>
 
             {/* Action buttons: Voir le détail ⌵ & Plein écran ↗ */}
-            <div className="flex items-center gap-2.5 shrink-0">
+            <div className="grid grid-cols-2 gap-2.5 sm:flex sm:items-center shrink-0">
               <button
                 type="button"
                 onClick={() => setIsDetailsOpen((prev) => !prev)}
-                className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer shadow-2xs ${
+                className={`inline-flex min-w-0 items-center justify-center gap-1.5 px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer shadow-2xs ${
                   isDetailsOpen
                     ? 'bg-[#2D241E] text-white border-[#2D241E] shadow-sm'
                     : 'bg-white text-[#4A3F35] border-[#E2DAD0] hover:bg-[#FAF7F2] hover:border-[#D5C8B8]'
@@ -133,7 +137,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
               <button
                 type="button"
                 onClick={() => setZoomedScreenshot({ project: currentProject, screenshot: currentScreenshot })}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-[#E2DAD0] text-[#4A3F35] hover:bg-[#FAF7F2] hover:border-[#D5C8B8] text-xs font-semibold transition-all cursor-pointer shadow-2xs"
+                className="inline-flex min-w-0 items-center justify-center gap-1.5 px-3 sm:px-4 py-2.5 rounded-xl bg-white border border-[#E2DAD0] text-[#4A3F35] hover:bg-[#FAF7F2] hover:border-[#D5C8B8] text-xs font-semibold transition-all cursor-pointer shadow-2xs"
                 title="Ouvrir le visualiseur interactif en plein écran"
               >
                 <span>Plein écran</span>
@@ -143,25 +147,24 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
           </div>
 
           {/* Interactive Screen Viewer (Window style) */}
-          <div className="p-4 sm:p-6 lg:p-8 bg-[#F9F7F3]/50">
+          <div className="p-2.5 sm:p-6 lg:p-8 bg-[#F9F7F3]/50">
             <div className="rounded-2xl border border-[#E2DAD0] bg-white shadow-sm overflow-hidden">
               {/* Window Title Bar */}
-              <div className="px-4 py-3 bg-[#FAF7F2] border-b border-[#EAE3D8] flex flex-wrap items-center justify-between gap-3">
+              <div className="px-3 sm:px-4 py-3 bg-[#FAF7F2] border-b border-[#EAE3D8] grid grid-cols-1 gap-3 sm:flex sm:flex-wrap sm:items-center sm:justify-between">
                 {/* Traffic lights & title */}
-                <div className="flex items-center gap-3">
+                <div className="flex min-w-0 items-center gap-3">
                   <div className="flex items-center gap-1.5">
                     <span className="w-3 h-3 rounded-full bg-[#FF5F56] inline-block" />
                     <span className="w-3 h-3 rounded-full bg-[#FFBD2E] inline-block" />
                     <span className="w-3 h-3 rounded-full bg-[#27C93F] inline-block" />
                   </div>
-                  <span className="text-xs font-semibold text-[#4A3F35] font-mono flex items-center gap-1.5">
-                    <span>{currentScreenshot.imageFileName}</span>
-                    <span className="text-[10px] text-[#9A8775] font-sans">({currentScreenshot.title})</span>
+                  <span className="flex min-w-0 items-center gap-1.5 text-xs font-semibold text-[#4A3F35]">
+                    <span className="truncate">{currentScreenshot.title}</span>
                   </span>
                 </div>
 
                 {/* Switcher for Views */}
-                <div className="flex items-center gap-1.5">
+                <div className="flex max-w-full items-center gap-1.5 overflow-x-auto pb-0.5">
                   {currentProject.screenshots.map((sc, index) => {
                     const isViewActive = activeViewId === sc.id;
                     return (
@@ -193,7 +196,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
               </div>
 
               {/* Window Body: Images de l'aperçu */}
-              <div className="p-2 sm:p-4 bg-[#0F1115] overflow-hidden flex items-center justify-center min-h-[320px] sm:min-h-[460px] relative group">
+              <div className="p-1.5 sm:p-4 bg-[#0F1115] overflow-auto flex items-center justify-center min-h-[240px] sm:min-h-[460px] relative group">
                 {!imgErrors[currentScreenshot.id] ? (
                   <img
                     key={currentScreenshot.id}
@@ -207,19 +210,19 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
                     }}
                   />
                 ) : (
-                  <div className="w-full h-full min-h-[360px] sm:min-h-[460px] flex items-center justify-center">
+                  <div className="w-full h-full min-h-[240px] sm:min-h-[460px] flex items-center justify-center">
                     <ProjectScreenMockup screenshotId={currentScreenshot.id} />
                   </div>
                 )}
               </div>
 
               {/* View Caption / Explanation */}
-              <div className="px-5 py-3.5 bg-white border-t border-[#EAE3D8] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <div className="px-4 sm:px-5 py-3.5 bg-white border-t border-[#EAE3D8] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                 <div>
                   <span className="font-bold text-[#2D241E] mr-2">{currentScreenshot.title}</span>
                   <span className="text-[#6E5D4F]">{currentScreenshot.subtitle}</span>
                 </div>
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex flex-wrap items-center gap-2 shrink-0">
                   <button
                     type="button"
                     onClick={() => setIsDetailsOpen((prev) => !prev)}
@@ -250,15 +253,15 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
                 transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                 className="overflow-hidden border-t border-[#EAE3D8] bg-white"
               >
-                <div className="p-6 sm:p-8">
+                <div className="p-4 sm:p-8">
                   {/* Accordion Header */}
-                  <div className="flex items-center justify-between gap-3 mb-6 pb-3 border-b border-[#F0EBE3]">
+                  <div className="grid grid-cols-1 gap-2 sm:flex sm:items-center sm:justify-between mb-6 pb-3 border-b border-[#F0EBE3]">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-bold uppercase tracking-wider text-[#7A583E]">
                         Décomposition du cas • {currentProject.title}
                       </span>
                     </div>
-                    <span className="text-[11px] font-semibold text-[#635345] bg-[#FAF8F5] px-2.5 py-1 rounded-full border border-[#EAE3D8]">
+                    <span className="w-fit text-[11px] font-semibold text-[#635345] bg-[#FAF8F5] px-2.5 py-1 rounded-full border border-[#EAE3D8]">
                       3 volets fondamentaux
                     </span>
                   </div>
@@ -392,19 +395,19 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
 
       {/* Fullscreen Lightbox / Zoom Modal */}
       {zoomedScreenshot && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-fade-in">
-          <div className="relative w-full max-w-5xl bg-[#FAF8F5] rounded-3xl border border-[#E7DFD5] shadow-2xl p-6 sm:p-8 max-h-[92vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-end justify-center overflow-hidden bg-black/60 backdrop-blur-sm animate-fade-in sm:items-center sm:p-6">
+          <div role="dialog" aria-modal="true" aria-label="Aperçu du projet" className="relative max-h-[100dvh] w-full overflow-y-auto overscroll-contain rounded-t-2xl border border-[#E7DFD5] bg-[#FAF8F5] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl sm:max-h-[92vh] sm:max-w-5xl sm:rounded-3xl sm:p-8">
             {/* Close button */}
             <button
               type="button"
               onClick={() => setZoomedScreenshot(null)}
-              className="absolute top-5 right-5 p-2.5 rounded-full bg-white text-[#7A6C5E] hover:text-[#2C2723] hover:bg-[#EFE9E0] border border-[#E8E1D5] transition-colors cursor-pointer z-20"
+              className="sticky top-0 z-20 float-right grid h-10 w-10 place-items-center rounded-full bg-white text-[#7A6C5E] shadow-sm hover:text-[#2C2723] hover:bg-[#EFE9E0] border border-[#E8E1D5] transition-colors cursor-pointer sm:absolute sm:top-5 sm:right-5"
             >
               <X className="w-5 h-5" />
             </button>
 
             {/* Header */}
-            <div className="mb-6 pr-12">
+            <div className="clear-both mb-5 sm:mb-6 sm:pr-12 sm:clear-none">
               <span className="text-xs font-bold uppercase tracking-wider text-[#7A583E]">
                 Cas n°{zoomedScreenshot.project.number} • {zoomedScreenshot.project.title}
               </span>
@@ -417,7 +420,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
             </div>
 
             {/* View Switcher inside modal */}
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-2 mb-2 sm:flex-wrap sm:overflow-visible sm:pb-0 sm:mb-4">
               {zoomedScreenshot.project.screenshots.map((sc, idx) => (
                 <button
                   key={sc.id}
@@ -426,19 +429,19 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
                     project: zoomedScreenshot.project,
                     screenshot: sc
                   })}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                  className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                     zoomedScreenshot.screenshot.id === sc.id
                       ? 'bg-[#2D241E] text-white border-[#2D241E]'
                       : 'bg-white text-[#4A3F35] border-[#E8DFD3] hover:bg-[#FAF7F2]'
                   }`}
                 >
-                  Vue {idx + 1} : {sc.title.split('—')[0].trim()}
+                  Vue {idx + 1} : {sc.title.split('—')[0]?.trim() ?? sc.title}
                 </button>
               ))}
             </div>
 
             {/* Fullscreen Direct Visual Canvas */}
-            <div className="rounded-2xl border border-[#E0D7CC] overflow-hidden bg-[#0F1115] p-2 sm:p-4 mb-6 flex items-center justify-center min-h-[360px] sm:min-h-[500px]">
+            <div className="rounded-xl sm:rounded-2xl border border-[#E0D7CC] overflow-auto bg-[#0F1115] p-1.5 sm:p-4 mb-5 sm:mb-6 flex items-center justify-center min-h-[240px] sm:min-h-[500px]">
               {!imgErrors[zoomedScreenshot.screenshot.id] ? (
                 <img
                   key={zoomedScreenshot.screenshot.id}
@@ -451,7 +454,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
                   }}
                 />
               ) : (
-                <div className="w-full h-full min-h-[460px] flex items-center justify-center">
+                <div className="w-full h-full min-h-[240px] sm:min-h-[460px] flex items-center justify-center">
                   <ProjectScreenMockup screenshotId={zoomedScreenshot.screenshot.id} isZoomed={true} />
                 </div>
               )}
@@ -472,7 +475,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenBooking 
 
             {/* Bottom modal actions */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 pt-4 border-t border-[#EAE3D8]">
-              <div className="flex items-center gap-3">
+              <div className="grid w-full grid-cols-1 gap-2 sm:flex sm:w-auto sm:items-center sm:gap-3">
                 <button
                   type="button"
                   onClick={() => {
